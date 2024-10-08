@@ -1,7 +1,7 @@
 export class WebResponse<T> {
   success: boolean;
   message: string;
-  data: T;
+  data?: T;
   statusCode: number;
   page?: number;
   totalPage?: number;

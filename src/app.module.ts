@@ -8,11 +8,21 @@ import { PaymentsModule } from './modules/payments/payments.module';
 import { ShipmentsModule } from './modules/shipments/shipments.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getTypeOrmConfig } from './config/database.config';
-
+import { AuthModule } from './modules/auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({isGlobal: true}),
+    ConfigModule.forRoot({ isGlobal: true }),
+
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
+        global: true,
+      }),
+    }),
 
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -20,7 +30,14 @@ import { getTypeOrmConfig } from './config/database.config';
       useFactory: getTypeOrmConfig,
     }),
 
-   ProductModule, ResellersModule, StocksModule, OrdersModule, PaymentsModule, ShipmentsModule],
+    ProductModule,
+    ResellersModule,
+    StocksModule,
+    OrdersModule,
+    PaymentsModule,
+    ShipmentsModule,
+    AuthModule,
+  ],
   controllers: [],
   providers: [],
 })
