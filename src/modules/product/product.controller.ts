@@ -16,10 +16,10 @@ import { CreateProductDto, ResponProduct } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { WebResponse } from 'src/common/model/web.model';
 import { CreateStockDto } from '../stocks/dto/create-stock.dto';
-import { AuthGuard } from 'src/common/guards/auth.guard';
+// import { AuthGuard } from 'src/common/guards/auth.guard';
 import { Throttle } from '@nestjs/throttler';
 
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
