@@ -7,7 +7,7 @@ import { Stock } from '../stocks/entities/stock.entity';
 import { JwtService } from '@nestjs/jwt';
 import { AuthModule } from '../auth/auth.module';
 import { ThrottlerGuard } from '@nestjs/throttler';
-import { AuthGuard } from 'src/common/guards/auth.guard';
+
 
 @Module({
   imports: [TypeOrmModule.forFeature([Product, Stock]), AuthModule],
@@ -15,7 +15,6 @@ import { AuthGuard } from 'src/common/guards/auth.guard';
   providers: [
     ProductService,
     JwtService,
-    AuthGuard,
     {
       provide: 'APP_GUARD',
       useClass: ThrottlerGuard,
