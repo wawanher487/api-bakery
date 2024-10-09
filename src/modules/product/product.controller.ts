@@ -17,6 +17,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { WebResponse } from 'src/common/model/web.model';
 import { CreateStockDto } from '../stocks/dto/create-stock.dto';
 import { AuthGuard } from 'src/common/guards/auth.guard';
+import { Throttle } from '@nestjs/throttler';
 
 @UseGuards(AuthGuard)
 @Controller('product')
@@ -56,6 +57,7 @@ export class ProductController {
     }
   }
 
+  @Throttle({default: { limit: 5, ttl: 6000 }})
   @Get()
   async findAll(): Promise<WebResponse<ResponProduct[]>> {
     try {

@@ -191,8 +191,13 @@ export class AuthService {
   // }
 
 
-  findAll() {
-    return `This action returns all auth`;
+  async findAll() {
+    const users = await this.userRepository.find({relations: ['refreshToken']});
+
+    if(!users) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+    return users;
   }
 
   findOne(id: number) {

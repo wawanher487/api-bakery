@@ -92,9 +92,27 @@ export class AuthController {
     }
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
+  @Get('users')
+  async findAll(): Promise<WebResponse<any>> {
+    try{
+      const data = await this.authService.findAll();
+
+      return {
+        success: true,
+        data: data,
+        message: 'User fetched successfully',
+        statusCode: HttpStatus.OK,
+      }
+    }catch(err){
+      throw new HttpException(
+        {
+          success: false,
+          message: err.message,
+          statusCode: HttpStatus.NOT_FOUND,
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   @Get(':id')
